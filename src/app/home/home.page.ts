@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  private readonly resultset: AngularFireList<any>;
 
-  constructor() {}
-
+  constructor(database: AngularFireDatabase) {
+    this.resultset = database.list('/');
+    this.resultset.valueChanges().subscribe(data => {
+      console.log(data);
+    });
+  }
 }
